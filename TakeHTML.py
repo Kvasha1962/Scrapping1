@@ -19,5 +19,3 @@ text = str(bs)
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(text)
-
-# рлорлоплопп
