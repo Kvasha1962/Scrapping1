@@ -33,28 +33,68 @@ table_first = (
     .find("tbody")
     .find_all("td")
 )
-dict_first_table: dict = {}
-count = 0
-for i in table_first:
-    dict_first_table[count] = i.text.strip()
-    count += 1
 
-print(dict_first_table)
+list_first_table = list()
+list_first_table_temp = list()
 
-third_header_text: str = third_header.text
-list_third_header: list = [third_header_text]
+for j in table_first:
+    if j.text.strip() != "":
+        list_first_table.append(j.text.strip())
 
-for column in second_header:
-    print(column.text.strip(), end="  ")
-    if column.text.strip():
-        dict_second_header[column.text.strip()] = column.text.strip()
+count = 1
+list_first_table_new = list()
+list_first_table_new_temp = list()
 
-print(dict_second_header)
+for i in list_first_table:
+    if count < 3:
+        list_first_table_new_temp.append(i)
+        count += 1
+    elif count == 3:
+        list_first_table_new_temp.append(i)
+        list_first_table_new.append(list_first_table_new_temp)
+        list_first_table_new_temp = list()
+        count = 1
+
+
+for i in list_first_table_new:
+    print(i, "\n")
+# dict_first_table: dict = {}
+# count = 0
+# for i in table_first:
+#     dict_first_table[i] = i.text.strip()
+#     count += 1
+#
+# print(dict_first_table)
+
+# third_header_text: str = third_header.text
+# list_third_header: list = [third_header_text]
+#
+# for column in second_header:
+#     print(column.text.strip(), end="  ")
+#     if column.text.strip():
+#         dict_second_header[column.text.strip()] = column.text.strip()
+#
+# print(dict_second_header)
 
 with open("header.csv", "w", encoding="utf-8", newline="") as f:
     header = csv.writer(f)
-    header1 = csv.DictWriter(f, fieldnames="")
-    header.writerow(list_first_header)
-    header.writerow(dict_second_header.keys())
-    header.writerow(list_third_header)
-    header1.writerows(dict_first_table)
+    # header1 = csv.DictWriter(f, fieldnames="")
+    # header.writerow(list_first_header)
+    # header.writerow(dict_second_header.keys())
+    # header.writerow(list_third_header)
+    # header1.writerows(dict_first_table)
+
+
+# list_one = [0, 1, 289, 3, 4, 5, 767, 7, 8, 9]
+# list_two = list()
+#
+# temp_list = list(list_one)
+# counter = 0
+#
+# for i in range(0, len(temp_list)):
+#     if counter >= len(temp_list) - 1:
+#         break
+#     else:
+#         list_two.append(temp_list[counter : counter + 2])
+#         counter += 2
+# print(list_two)
