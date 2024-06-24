@@ -19,10 +19,6 @@ second_header = bs.find("div", class_="table-responsive bg-white mt-3").find(
     "tr", class_="fon-table-lightgreen"
 )
 
-print(first_header.text)
-
-dict_second_header: dict = {}
-
 third_header = bs.find("div", class_="table-responsive bg-white mt-3").find(
     "tr", class_="fon-table-midgreen py-3"
 )
@@ -55,46 +51,26 @@ for i in list_first_table:
         list_first_table_new_temp = list()
         count = 1
 
-
+list_first_table = list()
 for i in list_first_table_new:
-    print(i, "\n")
-# dict_first_table: dict = {}
-# count = 0
-# for i in table_first:
-#     dict_first_table[i] = i.text.strip()
-#     count += 1
-#
-# print(dict_first_table)
+    list_first_table.append(i)
 
-# third_header_text: str = third_header.text
-# list_third_header: list = [third_header_text]
-#
-# for column in second_header:
-#     print(column.text.strip(), end="  ")
-#     if column.text.strip():
-#         dict_second_header[column.text.strip()] = column.text.strip()
-#
-# print(dict_second_header)
+third_header_text: str = third_header.text
+list_third_header: list = [third_header_text]
+
+dict_second_header_new = {}
+i = 1
+
+for column in second_header:
+    if column.text.strip() != "Продукт":
+        dict_second_header_new[i] = column.text.strip()
+        i += 1
+dict_second_header_new.pop(1)
+dict_second_header_new.pop(5)
 
 with open("header.csv", "w", encoding="utf-8", newline="") as f:
     header = csv.writer(f)
-    # header1 = csv.DictWriter(f, fieldnames="")
-    # header.writerow(list_first_header)
-    # header.writerow(dict_second_header.keys())
-    # header.writerow(list_third_header)
-    # header1.writerows(dict_first_table)
-
-
-# list_one = [0, 1, 289, 3, 4, 5, 767, 7, 8, 9]
-# list_two = list()
-#
-# temp_list = list(list_one)
-# counter = 0
-#
-# for i in range(0, len(temp_list)):
-#     if counter >= len(temp_list) - 1:
-#         break
-#     else:
-#         list_two.append(temp_list[counter : counter + 2])
-#         counter += 2
-# print(list_two)
+    header.writerow(list_first_header)
+    header.writerow(dict_second_header_new.values())
+    header.writerow(list_third_header)
+    header.writerows(list_first_table)
