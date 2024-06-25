@@ -55,7 +55,7 @@ list_first_table = list()
 for i in list_first_table_new:
     list_first_table.append(i)
 
-third_header_text: str = third_header.text
+third_header_text: str = third_header.text.strip()
 list_third_header: list = [third_header_text]
 
 dict_second_header_new = {}
@@ -66,10 +66,9 @@ for column in second_header:
         dict_second_header_new[i] = column.text.strip()
         i += 1
 dict_second_header_new.pop(1)
-dict_second_header_new.pop(5)
 
-with open("header.csv", "w", encoding="utf-8", newline="") as f:
-    header = csv.writer(f)
+with open("header.csv", "w", encoding="cp1251", newline="") as f:
+    header = csv.writer(f, delimiter=";")
     header.writerow(list_first_header)
     header.writerow(dict_second_header_new.values())
     header.writerow(list_third_header)
