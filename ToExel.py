@@ -7,6 +7,15 @@ from ToCSV import (
     list_third_header,
     )
 
+for item in list_first_table:
+    for i in item:
+        try:
+            index = item.index(i)
+            i = int(i)
+            item[index] = i
+        except ValueError:
+            pass
+
 list_second_header = [item for item in dict_second_header_new.values()]
 
 workbook = xlsxwriter.Workbook("Glick2.xlsx")
@@ -15,37 +24,22 @@ worksheet.set_column("B:D", 9)
 worksheet.set_row(1, 120)
 worksheet.set_column(1, 300)
 
-merge_format = workbook.add_format(
-    {
-        "bold": 1,
-        "align": "center",
-        "valign": "vcenter",
-        "color": "red",
-    }
-)
-merge_format.set_font_size(24)
 
-merge_format2 = workbook.add_format(
-    {
-        "bold": 1,
-        "align": "center",
-        "valign": "vcenter",
-    }
-)
-merge_format2.set_font_size(20)
-merge_format2.set_text_wrap(True)
-merge_format2.set_color("blue")
-merge_format2.set_align("center")
+def mergeFormat(bold, align, valign, color, fontSize):
+    merge_format = workbook.add_format(
+        {
+            "bold": bold,
+            "align": align,
+            "valign": valign,
+            "color": color,
+            "font_size": fontSize,
+        }
+    )
+    return merge_format
 
-worksheet.merge_range("B2:D2", list_first_header[0], merge_format)
-merge_format3 = workbook.add_format(
-    {
-        "bold": 1,
-        "align": "center",
-        "valign": "vcenter",
-        "color": "green",
-        "font_size": 14,
-    }
+
+worksheet.merge_range(
+    "B2:D2", list_first_header[0], mergeFormat(1, "center", "vcenter", "red", 24)
 )
 
 worksheet.merge_range(
@@ -54,7 +48,7 @@ worksheet.merge_range(
     3,
     3,
     list_third_header[0],
-    merge_format3,
+    mergeFormat(1, "center", "vcenter", "green", 14),
 )
 
 worksheet.write_row(
@@ -68,6 +62,7 @@ for i in range(len(list_first_table)):
         4 + i,
         1,
         list_first_table[i],
+        mergeFormat(0, "left", "vcenter", "black", 12),
     )
 
 worksheet.autofit()
