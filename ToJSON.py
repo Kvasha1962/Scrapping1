@@ -1,17 +1,14 @@
 import json
 
-dict_example = [
-    {"one": "one", "two": "two", "three": "three"},
-    {"four": "four", "five": "five", "six": "six"},
-    {
-        "seven": "seven",
-        "eight": "eight",
-        "nine": "nine",
-        "ten": "ten",
-    },
-]
-pjson = json.dumps(dict_example, indent=2)
-print(pjson)
+from ToCSV import list_first_table
 
-with open("ExJSON.json", "w") as f:
-    json.dump(dict_example, f, indent=2)
+keys = ["name", "gi", "description"]
+general_json = dict()
+k = 1
+for item_list in list_first_table:
+    dict_item = dict(zip(keys, item_list))
+    general_json[k] = dict_item
+    k += 1
+
+with open("ExJSON.json", "w", encoding="utf-8") as f:
+    json.dump(general_json, f, indent=2, ensure_ascii=False)
